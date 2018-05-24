@@ -1,0 +1,30 @@
+{
+  "name": "zero-to-live-fp-js-workshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "brakes": "^2.6.0",
+    "crocks": "^0.9.3",
+    "cross-env": "^5.1.5",
+    "jest": "^23.0.0",
+    "metrics": "^0.1.15",
+    "micro": "^9.3.1",
+    "micro-dev": "^3.0.0",
+    "node-fetch": "^2.1.2",
+    "pm2": "^2.10.4",
+    "pmx": "^1.6.4",
+    "prom-client": "^11.0.0",
+    "winston": "^3.0.0-rc5"
+  },
+  "devDependencies": {
+    "prettier": "^1.12.1"
+  },
+  "private": true
+}
