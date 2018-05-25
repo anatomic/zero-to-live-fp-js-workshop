@@ -1,9 +1,10 @@
 {
   "name": "zero-to-live-fp-js-workshop",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A project to teach developers how to stand up high quality node.js services",
   "scripts": {
+    "start": "pm2 start services.config.js --env production",
+    "dev": "pm2 start services.config.js --env development",
     "test": "jest"
   },
   "keywords": [],
@@ -21,6 +22,7 @@
     "pm2": "^2.10.4",
     "pmx": "^1.6.4",
     "prom-client": "^11.0.0",
+    "ramda": "^0.25.0",
     "winston": "^3.0.0-rc5"
   },
   "devDependencies": {

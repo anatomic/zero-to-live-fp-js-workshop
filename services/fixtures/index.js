@@ -1,17 +1,23 @@
 const micro = require('micro');
-const metrics = require('metrics');
+const url = require('url');
+const client = require('prom-client');
 const fetch = require('node-fetch');
 const Brakes = require('brakes');
 const Async = require('crocks/Async');
+const propPath = require('crocks/Maybe/propPath');
+const identity = require('crocks/combinators/identity');
 const map = require('crocks/pointfree/map');
+const option = require('crocks/pointfree/option');
 const assoc = require('crocks/helpers/assoc');
 const compose = require('crocks/helpers/compose');
 const mapProps = require('crocks/helpers/mapProps');
-const pick = require('crocks/helpers/pick');
+const omit = require('crocks/helpers/omit');
 const tap = require('crocks/helpers/tap');
 const winston = require('winston');
+const { lens, over } = require('ramda');
 
-const { send } = micro;
+const { sendError, createError } = micro;
+
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: winston.format.combine(
@@ -19,16 +25,21 @@ const logger = winston.createLogger({
     winston.format.align(),
     winston.format.simple()
   ),
-  transports: [
-    new winston.transports.Console()
-  ]
+  transports: [new winston.transports.Console()],
 });
 
-const report = new metrics.Report();
-const reporter = new metrics.ConsoleReporter(report);
-const counter = new metrics.Counter();
-report.addMetric('com.worldcup.fixtures.requests', counter);
-reporter.start(10000);
+const requestGuage = new client.Gauge({
+  name: 'fixturesAPIActiveRequests',
+  help: 'Shows the current number of requests being processed',
+});
+const responseTimer = new client.Histogram({
+  name: 'fixturesAPIResponseDuration',
+  help: 'Breaks down the length of time required to handle a request',
+});
+const requestCount = new client.Counter({
+  name: 'fixturesAPIRequests',
+  help: 'Count of all requests handled',
+});
 
 logger.info('Starting up');
 
@@ -55,14 +66,34 @@ const fetchm = (url, options) =>
 
 const toDate = d => new Date(d);
 
+const fixtureIdL = lens(
+  propPath(['_links', 'self', 'href']),
+  assoc('fixtureId')
+);
+const homeIdL = lens(
+  propPath(['_links', 'homeTeam', 'href']),
+  assoc('homeTeamId')
+);
+const awayIdL = lens(
+  propPath(['_links', 'awayTeam', 'href']),
+  assoc('awayTeamId')
+);
+const parseId = compose(option(null), map(link => /.*?(\d+)$/.exec(link)[1]));
+
+const omitMeta = omit(['_links', 'odds', 'matchday']);
+
 const parseFixture = compose(
   mapProps({ date: toDate }),
-  pick(['date', 'status', 'matchday', 'homeTeamName', 'awayTeamName', 'result'])
+  omitMeta,
+  over(awayIdL, parseId),
+  over(homeIdL, parseId),
+  over(fixtureIdL, parseId)
 );
 
 const parseFixtureResponse = compose(
   mapProps({ fixtures: map(parseFixture) }),
-  pick(['count', 'fixtures'])
+  assoc('timestamp', Date.now()),
+  omitMeta
 );
 
 const getFixtures = () =>
@@ -73,16 +104,28 @@ const getFixtures = () =>
     .map(tap(_ => logger.info('Received fixtures from upstream')));
 
 const cacheValidResponse = compose(
-  tap(_ => logger.debug("cached response")),
-  assoc('timestamp', Date.now()),
+  tap(_ => logger.debug('cached response')),
   tap(f => (lastKnownGood = f))
 );
 
 const app = micro(async (req, res) => {
-  counter.inc();
+  const reqUrl = url.parse(req.url);
+  if (reqUrl.pathname == '/metrics') {
+    return client.register.metrics();
+  }
+
+  if (reqUrl.pathname != '/') {
+    return sendError(req, res, createError(404, 'Not Found'));
+  }
+
+  const end = responseTimer.startTimer();
+  requestCount.inc();
+  requestGuage.inc();
   return getFixtures()
     .map(cacheValidResponse)
-    .bimap(_ => send(res, 200, lastKnownGood), f => send(res, 200, f))
+    .coalesce(_ => lastKnownGood, identity)
+    .map(tap(_ => requestGuage.dec()))
+    .map(tap(_ => end()))
     .toPromise();
 });
 
