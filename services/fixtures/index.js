@@ -4,27 +4,19 @@ const COMPETITION_ID = process.env.COMPETITION_ID;
 const TIMEOUT = process.env.TIMEOUT;
 
 const micro = require('micro');
-
 const url = require('url');
+
+const tap = require('crocks/helpers/tap');
+
 const client = require('prom-client');
 const Brakes = require('brakes');
-
-const propPath = require('crocks/Maybe/propPath');
-const map = require('crocks/pointfree/map');
-const option = require('crocks/pointfree/option');
-const assoc = require('crocks/helpers/assoc');
-const compose = require('crocks/helpers/compose');
-const mapProps = require('crocks/helpers/mapProps');
-const omit = require('crocks/helpers/omit');
-const tap = require('crocks/helpers/tap');
-const { lens, over } = require('ramda');
 
 const { fixtures } = require('../../packages/footballData');
 const worldCupFixtures = fixtures(COMPETITION_ID);
 
 const log = require('../../packages/logger');
 
-const { createError } = micro;
+const { send, createError } = micro;
 
 const logger = log.createLoggers('fixtures-app');
 
@@ -44,45 +36,6 @@ const requestCount = new client.Counter({
 });
 
 logger.info('starting up');
-
-// This little workaround allows us to have a fallback value if our remote service fails us
-let lastKnownGood = {
-  count: 0,
-  fixtures: [],
-  timestamp: Date.now(),
-};
-
-const toDate = d => new Date(d);
-
-const fixtureIdL = lens(
-  propPath(['_links', 'self', 'href']),
-  assoc('fixtureId')
-);
-const homeIdL = lens(
-  propPath(['_links', 'homeTeam', 'href']),
-  assoc('homeTeamId')
-);
-const awayIdL = lens(
-  propPath(['_links', 'awayTeam', 'href']),
-  assoc('awayTeamId')
-);
-const parseId = compose(option(null), map(link => /.*?(\d+)$/.exec(link)[1]));
-
-const omitMeta = omit(['_links', 'odds', 'matchday']);
-
-const parseFixture = compose(
-  mapProps({ date: toDate }),
-  omitMeta,
-  over(awayIdL, parseId),
-  over(homeIdL, parseId),
-  over(fixtureIdL, parseId)
-);
-
-const parseFixtureResponse = compose(
-  mapProps({ fixtures: map(parseFixture) }),
-  assoc('timestamp', Date.now()),
-  omitMeta
-);
 
 const app = micro(async (req, res) => {
   const end = responseTimer.startTimer();
@@ -115,6 +68,8 @@ const app = micro(async (req, res) => {
     })
     .map(tap(_ => requestGauge.dec()))
     .map(tap(_ => end()))
+    .swap(e => e, f => ({ status: 522 }))
+    .bimap(e => createError(e.status || 500, e.message || 'Failed', e), f => f)
     .toPromise();
 });
 
