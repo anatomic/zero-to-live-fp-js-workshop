@@ -30,7 +30,7 @@ const ENVIRONMENT = process.env.NODE_ENV || 'production';
 // canLog :: String -> Boolean
 const canLog = level => getLevel(level) <= LOG_LEVEL;
 
-// createLogBody :: Any -> Object
+// createLogBody :: (String|Number|Object|*) -> Object
 const createLogBody = val => {
   switch (true) {
     case isObject(val): {
@@ -40,7 +40,7 @@ const createLogBody = val => {
       return { message: val };
     }
     case isNumber(val): {
-      return { value: val }
+      return { value: val };
     }
     default: {
       return {};
@@ -48,6 +48,7 @@ const createLogBody = val => {
   }
 };
 
+// log :: String -> String -> a -> a
 const log = level => tag => val => (
   canLog(level) &&
     console.log(
@@ -66,15 +67,16 @@ const log = level => tag => val => (
   val
 );
 
+// createLogs :: String -> Logger
 const createLogs = tag =>
   Object.keys(LEVELS)
     .map(l => l.toLowerCase())
     .reduce((acc, l) => ({ ...acc, [l]: log(l)(tag) }), {});
 
-log.createLoggers = createLogs;
-
+// setLevel :: String -> Unit
 const setLevel = level => (LOG_LEVEL = getLevel(level));
 
+log.createLoggers = createLogs;
 log.setLevel = setLevel;
 
 module.exports = log;
