@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "A project to teach developers how to stand up high quality node.js services",
   "scripts": {
-    "start": "pm2 start services.config.js --env production",
-    "dev": "pm2 start services.config.js --env development",
+    "start": "pm2-runtime services.config.js --env production",
+    "dev": "pm2-dev services.config.js --env development",
     "test": "jest"
   },
   "keywords": [],
@@ -13,17 +13,12 @@
   "dependencies": {
     "brakes": "^2.6.0",
     "crocks": "^0.9.3",
-    "cross-env": "^5.1.5",
     "jest": "^23.0.0",
-    "metrics": "^0.1.15",
     "micro": "^9.3.1",
-    "micro-dev": "^3.0.0",
     "node-fetch": "^2.1.2",
     "pm2": "^2.10.4",
-    "pmx": "^1.6.4",
     "prom-client": "^11.0.0",
-    "ramda": "^0.25.0",
-    "winston": "^3.0.0-rc5"
+    "ramda": "^0.25.0"
   },
   "devDependencies": {
     "prettier": "^1.12.1"

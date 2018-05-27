@@ -8,14 +8,17 @@ const option = require('crocks/pointfree/option');
 const chain = require('crocks/pointfree/chain');
 
 const LEVELS = {
-  TRACE: 0,
-  DEBUG: 1,
-  INFO: 2,
-  NOTICE: 2,
-  WARN: 3,
-  ERROR: 4,
-  FATAL: 5,
+  TRACE: 6,
+  DEBUG: 5,
+  INFO: 4,
+  NOTICE: 3,
+  WARN: 2,
+  ERROR: 1,
+  FATAL: 0,
 };
+
+// We need to be able to inject a new reporter
+let reporter = console.log;
 
 // toUpper :: String -> Maybe String
 const toUpper = safeLift(isString, s => s.toUpperCase());
@@ -27,7 +30,7 @@ const LOG_LEVEL = getLevel(process.env.LOG_LEVEL);
 const ENVIRONMENT = process.env.NODE_ENV || 'production';
 
 // canLog :: String -> Boolean
-const canLog = level => getLevel(level) >= LOG_LEVEL;
+const canLog = level => getLevel(level) <= LOG_LEVEL;
 
 // createLogBody :: Any -> Object
 const createLogBody = val => {
@@ -46,11 +49,13 @@ const createLogBody = val => {
 
 const log = level => tag => val => (
   canLog(level) &&
-    console.log(
+    reporter(
       JSON.stringify({
         tag,
         environment: ENVIRONMENT,
-        pid: process.id,
+        pid: process.pid,
+        ppid: process.ppid,
+        platform: process.platform,
         timestamp: Date.now(),
         dateTime: new Date(),
         level: level.toUpperCase(),
@@ -60,4 +65,13 @@ const log = level => tag => val => (
   val
 );
 
+const createLogs = tag =>
+  Object.keys(LEVELS)
+    .map(l => l.toLowerCase())
+    .reduce((acc, l) => ({ ...acc, [l]: log(l)(tag) }), {});
+
+log.createLoggers = createLogs;
+log.setReporter = f => {
+  reporter = f;
+};
 module.exports = log;

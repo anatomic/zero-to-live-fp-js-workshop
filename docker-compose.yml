@@ -6,3 +6,17 @@ services:
       - "./prometheus.yml:/etc/prometheus/prometheus.yml"
     ports:
       - "9090:9090"
+  hystrix-dashboard:
+    image: 'mlabouardy/hystrix-dashboard:latest'
+    ports:
+      - "8080:8080"
+      - "9002:9002"
+  api:
+    ports:
+      - "8000-8005:8000-8005"
+    build:
+      context: .
+    command: ["yarn", "run", "dev"]
+    volumes:
+      - "./packages:/src/packages"
+      - "./services:/src/services"

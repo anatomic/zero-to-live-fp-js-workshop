@@ -1,11 +1,15 @@
+const API_TOKEN = process.env.API_TOKEN;
+const API_BASE = process.env.API_BASE;
+const COMPETITION_ID = process.env.COMPETITION_ID;
+const TIMEOUT = process.env.TIMEOUT;
+
 const micro = require('micro');
+
 const url = require('url');
 const client = require('prom-client');
-const fetch = require('node-fetch');
 const Brakes = require('brakes');
-const Async = require('crocks/Async');
+
 const propPath = require('crocks/Maybe/propPath');
-const identity = require('crocks/combinators/identity');
 const map = require('crocks/pointfree/map');
 const option = require('crocks/pointfree/option');
 const assoc = require('crocks/helpers/assoc');
@@ -13,26 +17,24 @@ const compose = require('crocks/helpers/compose');
 const mapProps = require('crocks/helpers/mapProps');
 const omit = require('crocks/helpers/omit');
 const tap = require('crocks/helpers/tap');
-const winston = require('winston');
 const { lens, over } = require('ramda');
 
-const { sendError, createError } = micro;
+const { fixtures } = require('../../packages/footballData');
+const worldCupFixtures = fixtures(COMPETITION_ID);
 
-const logger = winston.createLogger({
-  level: process.env.LOG_LEVEL || 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.align(),
-    winston.format.simple()
-  ),
-  transports: [new winston.transports.Console()],
-});
+const log = require('../../packages/logger');
 
-const requestGuage = new client.Gauge({
+const { createError } = micro;
+
+const logger = log.createLoggers('fixtures-app');
+
+client.collectDefaultMetrics({ timeout: 5000 });
+
+const requestGauge = new client.Gauge({
   name: 'fixturesAPIActiveRequests',
   help: 'Shows the current number of requests being processed',
 });
-const responseTimer = new client.Histogram({
+const responseTimer = new client.Summary({
   name: 'fixturesAPIResponseDuration',
   help: 'Breaks down the length of time required to handle a request',
 });
@@ -41,11 +43,7 @@ const requestCount = new client.Counter({
   help: 'Count of all requests handled',
 });
 
-logger.info('Starting up');
-
-const API_KEY = process.env.API_KEY;
-const API_BASE = process.env.API_BASE;
-const COMPETITION_ID = process.env.COMPETITION_ID;
+logger.info('starting up');
 
 // This little workaround allows us to have a fallback value if our remote service fails us
 let lastKnownGood = {
@@ -53,16 +51,6 @@ let lastKnownGood = {
   fixtures: [],
   timestamp: Date.now(),
 };
-
-const fetchJson = (url, options) => fetch(url, options).then(res => res.json());
-const fetchBrake = new Brakes(fetchJson, { timeout: process.env.TIMEOUT });
-const fetchm = (url, options) =>
-  Async((rej, res) =>
-    fetchBrake
-      .exec(url, options)
-      .then(res)
-      .catch(rej)
-  );
 
 const toDate = d => new Date(d);
 
@@ -96,35 +84,36 @@ const parseFixtureResponse = compose(
   omitMeta
 );
 
-const getFixtures = () =>
-  fetchm(`${API_BASE}/competitions/${COMPETITION_ID}/fixtures`, {
-    headers: { 'X-Auth-Token': API_KEY },
-  })
-    .map(parseFixtureResponse)
-    .map(tap(_ => logger.info('Received fixtures from upstream')));
-
-const cacheValidResponse = compose(
-  tap(_ => logger.debug('cached response')),
-  tap(f => (lastKnownGood = f))
-);
-
 const app = micro(async (req, res) => {
+  const end = responseTimer.startTimer();
   const reqUrl = url.parse(req.url);
-  if (reqUrl.pathname == '/metrics') {
+  if (reqUrl.pathname === '/metrics') {
     return client.register.metrics();
   }
 
-  if (reqUrl.pathname != '/') {
-    return sendError(req, res, createError(404, 'Not Found'));
+  if (reqUrl.pathname === '/hystrix.stream') {
+    res.setHeader('Content-Type', 'text/event-stream;charset=UTF-8');
+    res.setHeader(
+      'Cache-Control',
+      'no-cache; no-store; max-age=0; must-revalidate'
+    );
+    res.setHeader('Pragma', 'no-cache');
+    return Brakes.getGlobalStats().getHystrixStream();
   }
 
-  const end = responseTimer.startTimer();
+  if (reqUrl.pathname !== '/') {
+    throw createError(404, 'Not Found');
+  }
+
   requestCount.inc();
-  requestGuage.inc();
-  return getFixtures()
-    .map(cacheValidResponse)
-    .coalesce(_ => lastKnownGood, identity)
-    .map(tap(_ => requestGuage.dec()))
+  requestGauge.inc();
+  return worldCupFixtures
+    .runWith({
+      apiBase: API_BASE,
+      apiToken: API_TOKEN,
+      timeout: TIMEOUT,
+    })
+    .map(tap(_ => requestGauge.dec()))
     .map(tap(_ => end()))
     .toPromise();
 });

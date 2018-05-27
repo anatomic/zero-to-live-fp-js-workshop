@@ -1,7 +1,0 @@
-{
-  "name": "logger",
-  "version": "0.0.1",
-  "dependencies": {
-    "crocks": "^0.9.3"
-  }
-}
