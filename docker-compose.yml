@@ -16,6 +16,7 @@ services:
       - "8000-8005:8000-8005"
     build:
       context: .
+      dockerfile: 'src/services/codes/Dockerfile'
     command: ["yarn", "run", "dev"]
     volumes:
       - "./packages:/src/packages"
