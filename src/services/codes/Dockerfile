@@ -5,11 +5,12 @@ WORKDIR /src
 
 COPY src/packages packages/
 COPY src/services services/
-COPY services.config.js .
 COPY package.json .
 
-# We're only exposing three services at the moment
-EXPOSE 8000 8001 8002
+ENV NODE_ENV production
+ENV LOG_LEVEL NOTICE
+
+EXPOSE 8000
 
 RUN yarn
-CMD ["yarn", "start"]
+CMD ["node_modules/.bin/pm2-runtime", "services/codes/index.js"]

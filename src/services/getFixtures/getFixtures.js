@@ -1,24 +1,20 @@
+const micro = require('micro');
+const { send, createError } = micro;
+const url = require('url');
+
+const client = require('prom-client');
+const Brakes = require('brakes');
+
+const { fixtures } = require('../../packages/footballData/index');
+
+// Set up the environment
+
 const API_TOKEN = process.env.API_TOKEN;
 const API_BASE = process.env.API_BASE;
 const COMPETITION_ID = process.env.COMPETITION_ID;
 const TIMEOUT = process.env.TIMEOUT;
 
-const micro = require('micro');
-const url = require('url');
-
-const tap = require('crocks/helpers/tap');
-
-const client = require('prom-client');
-const Brakes = require('brakes');
-
-const { fixtures } = require('../../packages/footballData');
-const worldCupFixtures = fixtures(COMPETITION_ID);
-
-const log = require('../../packages/logger');
-
-const { send, createError } = micro;
-
-const logger = log.createLoggers('fixtures-app');
+// Setup metrics
 
 client.collectDefaultMetrics({ timeout: 5000 });
 
@@ -35,7 +31,9 @@ const requestCount = new client.Counter({
   help: 'Count of all requests handled',
 });
 
-logger.info('starting up');
+// Create app logic
+
+const worldCupFixtures = fixtures(COMPETITION_ID);
 
 const app = micro(async (req, res) => {
   const end = responseTimer.startTimer();
@@ -60,17 +58,25 @@ const app = micro(async (req, res) => {
 
   requestCount.inc();
   requestGauge.inc();
-  return worldCupFixtures
+
+  worldCupFixtures
     .runWith({
       apiBase: API_BASE,
       apiToken: API_TOKEN,
       timeout: TIMEOUT,
     })
-    .map(tap(_ => requestGauge.dec()))
-    .map(tap(_ => end()))
-    .swap(e => e, f => ({ status: 522 }))
-    .bimap(e => createError(e.status || 500, e.message || 'Failed', e), f => f)
-    .toPromise();
+    .fork(
+      e =>
+        send(res, e.status || 500, {
+          success: false,
+          message: e.message || 'Request failed',
+        }),
+      r => {
+        requestGauge.dec();
+        end();
+        send(res, 200, { success: true, ...r });
+      }
+    );
 });
 
-app.listen(process.env.PORT || 3000);
+module.exports = app;
