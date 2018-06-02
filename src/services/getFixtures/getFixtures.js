@@ -52,10 +52,6 @@ const app = micro(async (req, res) => {
     return Brakes.getGlobalStats().getHystrixStream();
   }
 
-  if (reqUrl.pathname !== '/') {
-    throw createError(404, 'Not Found');
-  }
-
   requestCount.inc();
   requestGauge.inc();
 
@@ -75,6 +71,8 @@ const app = micro(async (req, res) => {
         });
       },
       r => {
+        requestGauge.dec(); // Need to have this in both branches otherwise leaks be happenin'
+        end();
         send(res, 200, { success: true, ...r });
       }
     );

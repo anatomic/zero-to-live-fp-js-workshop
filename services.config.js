@@ -1,6 +1,16 @@
 module.exports = {
   apps: [
     {
+      name: 'Proxy',
+      script: './src/proxy.js',
+      exec_mode: 'cluster',
+      watch: true,
+      env: {
+        PORT: 3000,
+        NODE_ENV: 'development',
+      },
+    },
+    {
       name: 'Hello World',
       script: './src/services/helloWorld/index.js',
       exec_mode: 'cluster',

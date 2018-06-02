@@ -1,14 +1,13 @@
 const fetch = require('node-fetch');
 const Async = require('crocks/Async');
-const Pred = require('crocks/Pred');
 const ReaderT = require('crocks/Reader/ReaderT');
 
-const flip = require('crocks/combinators/flip');
 const compose = require('crocks/helpers/compose');
+const composeK = require('crocks/helpers/composeK');
 const defaultProps = require('crocks/helpers/defaultProps');
 const propOr = require('crocks/helpers/propOr');
+const and = require('crocks/logic/and');
 const ifElse = require('crocks/logic/ifElse');
-const runWith = require('crocks/pointfree/runWith');
 const isNumber = require('crocks/predicates/isNumber');
 
 const { fromAPIResponse } = require('./fixture');
@@ -18,12 +17,11 @@ const { Rejected } = Async;
 const { ask, lift } = AsyncReader;
 
 const statusCodeIsNumber = compose(isNumber, propOr(false, 'status'));
-
-const isSuccess = flip(runWith)(
-  Pred(statusCodeIsNumber).concat(
-    Pred(({ status }) => status >= 200 && status < 400)
-  )
+const statusCodeIsValid = compose(
+  code => code >= 200 && code < 400,
+  propOr(500, 'status')
 );
+const isSuccess = and(statusCodeIsNumber, statusCodeIsValid);
 
 const fromJson = r =>
   Async((rej, res) =>
@@ -34,8 +32,8 @@ const fromJson = r =>
   );
 
 const parseResponse = ifElse(isSuccess, fromJson, Rejected);
-const fetchm = Async.fromPromise(fetch);
-const fetchJson = (url, options) => fetchm(url, options).chain(parseResponse);
+const mfetch = Async.fromPromise(fetch);
+const fetchJson = composeK(parseResponse, mfetch);
 
 const defaults = defaultProps({
   apiBase: 'http://api.football-data.org/v1',
