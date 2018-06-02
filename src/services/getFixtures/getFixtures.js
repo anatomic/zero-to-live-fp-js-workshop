@@ -66,14 +66,15 @@ const app = micro(async (req, res) => {
       timeout: TIMEOUT,
     })
     .fork(
-      e =>
+      e => {
+        requestGauge.dec(); // Need to have this in both branches otherwise leaks be happenin'
+        end();
         send(res, e.status || 500, {
           success: false,
           message: e.message || 'Request failed',
-        }),
+        });
+      },
       r => {
-        requestGauge.dec();
-        end();
         send(res, 200, { success: true, ...r });
       }
     );

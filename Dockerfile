@@ -1,10 +1,10 @@
 FROM node:alpine
 
-RUN mkdir /src
-WORKDIR /src
+RUN mkdir /code
+WORKDIR /code
 
-COPY src/packages packages/
-COPY src/services services/
+COPY src/packages src/packages/
+COPY src/services src/services/
 COPY services.config.js .
 COPY package.json .
 
