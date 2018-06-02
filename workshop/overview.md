@@ -13,3 +13,15 @@ We're going to be making use of some fairly new language features so to get the 
 The source for the workshop is available on github:
 
 `git clone git@github.com:anatomic/zero-to-live-fp-js-workshop.git`
+
+
+## Things we are going to explore
+
+1. [Writing JavaScript in a functional style using ADTs from the crocks library](./fp-js.md)
+2. Designing and building microservice APIs
+3. Logging
+4. Metrics
+5. Circuit Breakers
+6. Process management
+7. Containerisation with Docker
+8. Deployment

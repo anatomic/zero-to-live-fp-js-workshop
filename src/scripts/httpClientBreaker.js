@@ -64,9 +64,3 @@ module.exports = {
   mfetchJson,
   createBreaker,
 };
-
-const b = createBreaker('test', { timeout: 200 });
-
-b
-  .mfetchJson('https://status-code-checker.now.sh/500')
-  .fork(log('err'), log('success'));
