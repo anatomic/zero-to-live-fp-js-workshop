@@ -8,3 +8,8 @@ While the focus for the workshop is main on node.js, a lot of what is covered ca
 
 We're going to be making use of some fairly new language features so to get the most out of the workshop you'll need to have node > v9 (preferably v10), npm 5+ and the latest version of yarn installed. Yarn isn't an absolute necessity but it's what has been used to build out the workshop examples so it may help to be consistent.
 
+## Downloading the repo
+
+The source for the workshop is available on github:
+
+`git clone git@github.com:anatomic/zero-to-live-fp-js-workshop.git`
