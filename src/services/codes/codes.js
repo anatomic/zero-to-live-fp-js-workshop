@@ -32,8 +32,6 @@ const app = micro(async (req, res) => {
     return send(res, 404);
   }
 
-  console.log(req);
-
   validateCode(reqUrl.pathname).bimap(
     status => {
       logger.notice({

@@ -9,12 +9,13 @@ const option = require('crocks/pointfree/option');
 const chain = require('crocks/pointfree/chain');
 
 const LEVELS = {
-  TRACE: 6,
-  DEBUG: 5,
-  INFO: 4,
-  NOTICE: 3,
-  WARN: 2,
-  ERROR: 1,
+  TRACE: 7,
+  DEBUG: 6,
+  INFO: 5,
+  NOTICE: 4,
+  WARN: 3,
+  ERROR: 2,
+  ALERT: 1,
   FATAL: 0,
 };
 
