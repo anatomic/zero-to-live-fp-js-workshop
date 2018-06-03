@@ -89,5 +89,7 @@ toxiproxy-cli toxic add footy-api --type timeout -n down -a timeout=2000
 * [Circuit Breaker](https://martinfowler.com/bliki/CircuitBreaker.html)
 * [Brakes](https://npmjs.com/package/brakes)
 * [Toxiproxy](https://github.com/Shopify/toxiproxy)
+* [Siege](https://www.joedog.org/siege-manual/)
+* [Load Testing Web Servers With Siege](https://www.linode.com/docs/tools-reference/tools/load-testing-with-siege/)
 
 Next - [docker](./docker.md)
