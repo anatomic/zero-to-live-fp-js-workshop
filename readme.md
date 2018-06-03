@@ -18,8 +18,8 @@ The source for the workshop is available on github:
 
 1. [Writing JavaScript in a functional style using ADTs from the crocks library](./workshop/fp-js.md)
 1. [Logging](./workshop/logging.md)
-1. [A basic microservice](./workshop/design-patterns.md)
-1. [A more advanced microservice]()
+1. [A basic microservice](./workshop/a-simple-application.md)
+1. [A more realistic microservice](./workshop/a-more-realistic-application.md)
 1. [Process management](./workshop/process-management.md)
 1. [Configuration](./workshop/configuration.md)
 1. [Metrics](./workshop/metrics.md)

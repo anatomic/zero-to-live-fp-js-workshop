@@ -1,4 +1,12 @@
+# A Simple Application
+
+So, we've done some basic work on writing functional JavaScript but it's still very academic. Let's get started on our path to writing production applications by tackling the world's most favourite programming problem - how to get "Hello World" over HTTP.
+
+But first we'll have a quick look at the sort of software architecture we're going to be implementing.
+
 ## Application Design Patterns
+
+We will aim to build our applications in a way which allows us to use them in a multitude of different situations, independently of the access layer (i.e. HTTP, AMQP, Websocket, admin script, etc.)
 
 > By separating the software into layers, and conforming to The Dependency Rule, you will create a system that is intrinsically testable, with all the benefits that implies. When any of the external parts of the system become obsolete, like the database, or the web framework, you can replace those obsolete elements with a minimum of fuss.
 

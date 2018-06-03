@@ -8,12 +8,27 @@
 
 There are various methods available manage secrets and environment variables. Locally we will use our process manager configuration to handle our local environment variables and the test/staging/production environments will be managed by the platform you use to run your applications. For the majority of this workshop we'll be referencing configuration for the Now platform, but similar ideas exist whether you're deploying to kubernetes, a cloud provider, PAAS (like heroku) or *gasp* via virtual machines (using Chef, Puppet, Ansible, or otherwise).
 
+## Introducing Reader
+
+> `Reader` is a lazy Product Type that enables the composition of computations that depend on a shared environment `(e -> a)`. The left portion, the `e` must be fixed to a type for all related computations. The right portion `a` can vary in its type.
+
+I'm sure this description is perfectly accessible for people well versed in category theory and Haskell data types, but for mere mortals like myself it requires further explanation. 
+
+The simplest way to understand Reader is that it provides a way to provide read-only data to any function (computation). So, for example, in our application where we have a specific base URL for calls to the football-data API, we may choose to pass this to our functions by wrapping them in a Reader rather than reaching into the `process.env` global (which is impure).
+
+## Working wih ReaderT
+
+
+
 ## Exercises
 
-1. Take the hard coded secrets and configuration out of your app and retrieve them from the environment
+1. Take the hard coded secrets and configuration out of your world cup microservice and retrieve them from the environment. *Consider which elements of your application may need to differ between environments (this includes testing environments which run unit and integration tests)*
+1. Introduce ReaderT into your
 
 ## Further Reading
 
+* [`Reader` documentation](https://evilsoft.github.io/crocks/docs/crocks/Reader.html)
+* [`ReaderT` documentation](https://evilsoft.github.io/crocks/docs/crocks/ReaderT.html)
 * [Hashicorp Vault](https://www.vaultproject.io/)
 * [Consul](https://www.consul.io/)
 * [Zookeeper](https://zookeeper.apache.org/)
