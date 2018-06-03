@@ -14,15 +14,14 @@ The source for the workshop is available on github:
 
 `git clone git@github.com:anatomic/zero-to-live-fp-js-workshop.git`
 
-
 ## Things we are going to explore
 
-1. [Writing JavaScript in a functional style using ADTs from the crocks library](./fp-js.md)
-1. [Logging](./logging.md)
-1. [A Basic Microservice](./design-patterns.md)
-1. [Configuration](./configuration.md)
-1. [Metrics](./metrics.md)
-1. [Circuit Breakers](./circuit-breaker.md)
-1. [Process management](./process-management.md)
-1. [Containerisation with Docker](./docker.md)
-1. [Deployment](./deployment.md)
+1. [Writing JavaScript in a functional style using ADTs from the crocks library](../zero-to-live-fp-js-workshop/workshop/fp-js.md)
+1. [Logging](../zero-to-live-fp-js-workshop/workshop/logging.md)
+1. [A Basic Microservice](../zero-to-live-fp-js-workshop/workshop/design-patterns.md)
+1. [Configuration](../zero-to-live-fp-js-workshop/workshop/configuration.md)
+1. [Metrics](../zero-to-live-fp-js-workshop/workshop/metrics.md)
+1. [Circuit Breakers](../zero-to-live-fp-js-workshop/workshop/circuit-breaker.md)
+1. [Process management](../zero-to-live-fp-js-workshop/workshop/process-management.md)
+1. [Containerisation with Docker](../zero-to-live-fp-js-workshop/workshop/docker.md)
+1. [Deployment](../zero-to-live-fp-js-workshop/workshop/deployment.md)
