@@ -76,3 +76,10 @@ console.log(
  * first chain is Just(1/10) === Just(0.1)
  * second chain is Just(1/0.1) === Just(10) ~ the output from the previous value becomes the `den`
  */
+
+const add10ToEnv = ask(x => x + 10);
+const add20ToEnv = ask(x => x + 20); // x will be set to the value provided in runWith
+const flow = add10ToEnv.chain(x => add20ToEnv.map(y => x + y));
+
+console.log(flow.runWith(1)); // Just(1 + 10) + Just(1 + 20) = Just 32
+console.log(flow.runWith(10)); // Just(1 + 10) + Just(1 + 20) = Just 32

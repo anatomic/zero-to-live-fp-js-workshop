@@ -18,7 +18,9 @@ The simplest way to understand Reader is that it provides a way to provide read-
 
 ## Working wih ReaderT
 
+> `ReaderT` is a Monad Transformer that wraps a given Monad with a `Reader`. This allows the interface of a Reader that enables the composition of computations that depend on a shared environment `(e -> a)`, but provides a way to abstract a means the `Reader` portion, when combining `ReaderT`s of the same type. All `ReaderT`s must provide the constructor of the target Monad that is being wrapped.
 
+Ok, so in my opinion this is even harder to get into than before.
 
 ## Exercises
 
