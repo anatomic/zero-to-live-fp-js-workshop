@@ -18,10 +18,11 @@ The source for the workshop is available on github:
 ## Things we are going to explore
 
 1. [Writing JavaScript in a functional style using ADTs from the crocks library](./fp-js.md)
-1. Logging
-1. Designing and building microservice APIs
-1. Metrics
-1. Circuit Breakers
-1. Process management
-1. Containerisation with Docker
-1. Deployment
+1. [Logging](./logging.md)
+1. [Configuration](./configuration.md)
+1. [Designing and building microservice APIs](./design-pattern.md)
+1. [Metrics](./metrics.md)
+1. [Circuit Breakers](./circuit-breaker.md)
+1. [Process management](./process-management.md)
+1. [Containerisation with Docker](./docker.md)
+1. [Deployment](./deployment.md)

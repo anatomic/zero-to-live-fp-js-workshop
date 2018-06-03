@@ -32,13 +32,19 @@ const app = micro(async (req, res) => {
     return send(res, 404);
   }
 
+  console.log(req);
+
   validateCode(reqUrl.pathname).bimap(
-    _ => {
+    status => {
       logger.notice({
         message: 'Invalid status code supplied',
         path: reqUrl.pathname,
+        status,
       });
-      send(res, 500, { message: 'You have not supplied a valid status code' });
+      send(res, 500, {
+        message: 'You have not supplied a valid status code',
+        status,
+      });
     },
     status => {
       logger.notice({ status, path: reqUrl.pathname });
