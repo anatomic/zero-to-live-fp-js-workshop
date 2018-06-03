@@ -6,6 +6,12 @@ One example of this separation of concerns is the hexagonal architecture (shown 
 
 ![Hexagonal Architecture](./diagrams/hexagonal-architecture.png)
 
+To explain some of the terms used:
+
+* Domain – business logic layer exposed via function interface
+* Application – Orchestrates communication between Framework and Domain
+* Framework – Elements (like libraries etc.) that are used by the Application but which aren’t built or owned by you
+
 This does a pretty good job of showing how a traditional MVC application may consider splitting itself up to fit this "clean architecture" style thinking. It doesn't, however, map neatly with some of the other ideas presented as part of this workshop so I've tweaked it slightly to better fit how I view this concept related to functional programming principles.
 
 ![Target Architecture](./diagrams/target-architecture.png)
