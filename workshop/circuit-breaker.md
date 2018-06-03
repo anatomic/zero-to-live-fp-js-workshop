@@ -1,9 +1,16 @@
 # Circuit Breaker
 
+> Circuit breakers are effective at guarding against integration points, cascading failures, unbalanced capacities, and slow responses.
 
-## Exercise
+## Modelling Failure Locally
+
+tl;dr Use toxiproxy and inject failure to watch things crumble (or not, after all, you're implementing the Circuit Breaker pattern!)
+
+## Exercises
 
 1. Using the `httpClient` you wrote in the [first part of the workshop](./fp-js.md), create a new version of the client which includes a circuit breaker
+1. Update your world cup fixtures application to use your newly created circuit breaker version of httpClient
+
 
 ## Further Reading
 

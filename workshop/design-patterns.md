@@ -1,6 +1,11 @@
 ## Application Design Patterns
 
+> By separating the software into layers, and conforming to The Dependency Rule, you will create a system that is intrinsically testable, with all the benefits that implies. When any of the external parts of the system become obsolete, like the database, or the web framework, you can replace those obsolete elements with a minimum of fuss.
+
+One example of this separation of concerns is the hexagonal architecture (shown below). 
+
 ![Hexagonal Architecture](./diagrams/hexagonal-architecture.png)
+
 
 ![Target Architecture](./diagrams/target-architecture.png)
 
@@ -22,6 +27,7 @@ Example JSON response:
 
 ## Further Reading
 
+* [The Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
 * [Hexagonal Architecture](http://fideloper.com/hexagonal-architecture)
 * [Micro](https://npmjs.com/package/micro)
 * [test-listen](https://npmjs.com/package/test-listen)
