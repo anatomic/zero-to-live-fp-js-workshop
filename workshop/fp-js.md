@@ -71,7 +71,16 @@ const promiseToAsync = p => Async((rej, res) => p.then(res).catch(rej));
 const jsonAsync = compose(promiseToAsync, toJson);
 ```
 
-Congratulations, you've just written your first pointfree flow.
+Congratulations, you've just written your first pointfree flow. You can now use these functions as follows:
+
+```JavaScript
+mfetch('http://some.url.com')
+    .chain(jsonAsync)
+    .fork(
+      e => console.error(e),
+      json => console.log(json)
+    );
+```
 
 ## Validating responses
 
@@ -81,9 +90,11 @@ If you're not sure, have a play with your newly written code and a small helper 
 
 > The API expects queries in the format `status-code-checker.now.sh/:code` where `:code` is a numerical value representing a valid status code (i.e. 404, 500, etc.)
 
+**Question:** Which branch of the Async would you expect a response of status 500 to come down?
+
 ## Exercises
 
-1. Having played around with the functions you've just written, create a new version of `mfetch` which rejects when the response has a status code which implies an unsuccessful request.
+1. Having played around with the functions you've just written, create a new version of `mfetch` which rejects when the response has a status code which implies an unsuccessful request. (It's up to you to decide which status codes should be deemed unsuccessful.)
 2. Create a new function `mfetchJson` which, when called with appropriate parameters creates an Async containing a JSON response (i.e. the body of the response parsed into JavaScript objects)
 
 > Hint, have a look around the crocks documentation to see how you can use predicates and logic functions to build up the various pieces of functionality
