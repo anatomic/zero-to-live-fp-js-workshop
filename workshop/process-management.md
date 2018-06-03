@@ -21,7 +21,7 @@ To achieve this, we're going to use a couple of different tools (some clues from
 
 PM2 is process manager which can be used in development and production environments (and also in containers - have a look through the workshop code to see how that works) and offers us a nice way of working with microservice/function-as-a-service style node.js apps.
 
-Covering PM2 in great depth would take way longer than the time allocated for this workshop (so go read the docs!) but, in a nutshell, with some basic configuration in place we can get horizontally scaled processed and restart on file change functionally with very little effort.
+Covering PM2 in great depth would take way longer than the time allocated for this workshop (so go read the docs!) but, in a nutshell, with some basic configuration in place we can get horizontally scaled processed and restart on file change functionally with very little effort. (More information on how to use PM2 with docker is [available on the PM2 website](http://pm2.keymetrics.io/docs/usage/docker-pm2-nodejs/))
 
 ### Useful commands
 
