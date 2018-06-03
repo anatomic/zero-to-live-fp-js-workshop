@@ -4,6 +4,8 @@ Logging is an area where we start to seek out the more pragmatic side of functio
 
 > A twelve-factor app never concerns itself with routing or storage of its output stream. It should not attempt to write to or manage logfiles. Instead, each running process writes its event stream, unbuffered, to stdout. During local development, the developer will view this stream in the foreground of their terminal to observe the app’s behavior.
 
+So, in a nutshell, we're going to be sending stuff out from our app using the honourable `console.log`!
+
 ## Log Levels
 
 We'll be using the logging levels as defined by The Syslog Protocol RFC:
@@ -34,6 +36,21 @@ Example of JSON log format:
 ```
 
 Whichever format you choose to go with, keep in mind that logging is most effective when your log is output on a single line.
+
+## Integrating With ADTs
+
+As well as being an awesome library for working with ADTs, crocks is also a pragmatic language for working with ADTs. While some camps won't be happy with some of the choices we'll make around exposing side-effects (such as logging), there's no point in getting overly het up about making JavaScript behave *exactly* like Haskell. For a start, it can't, so let's embrace some pragmatism and make use of the incredibly helpful `tap` function provided by Crocks.
+
+```bash
+> const tap = require('crocks/helpers/tap');
+undefined
+> [1, 2, 3, 4].map(tap(console.log))
+1
+2
+3
+4
+[ 1, 2, 3, 4 ]
+```
 
 ## Exercises
 
