@@ -41,6 +41,19 @@ mfetch('http://some.url.com')
     );
 ```
 
+### Why Don't We Just Use Promises?
+
+The short answer is that Async is lazy and promises aren't. This means that promises evaluate eagerly (when declared) rather than later when instructed to. This property of laziness allows us to build up flows of execution using Asyncs and then run them later, when needed.
+
+The longer answer is that Async is Monadic (it fulfils the [fantasyland-spec](https://github.com/fantasyland/fantasy-land)) so you get all the goodness of mathematical laws to rely on as well as the laziness. 
+
+From the Fluture wiki:
+> * The computation runs immediately, before callbacks are available, so the resulting value has to be kept somewhere, making Promises inherently stateful.
+> * Any side-effects will run, even if continuations are never provided. This means Promises cannot be used to control side-effects.
+> * Errors might occur as a result of the evaluation, but Promises have no way to know whether they will be handled.
+
+*(Other variants of the Async Monad are available, see [Task](http://folktale.origamitower.com/api/v2.1.0/en/folktale.concurrency.task.html) and [Fluture](https://github.com/fluture-js/Fluture/wiki/Comparison-to-Promises), for example)**
+
 ## Next Steps
 
 The above is great, we've got our basic client and it's firing off requests splendidly but it's not the most useful thing ever written. Typically, the response will be checked to make sure it's an expected response type (i.e. check the HTTP status code) and then the body of the response will be parsed into something more useful. For the vast majority of uses we're talking about, this processing starts with getting the body as JSON.
@@ -104,5 +117,6 @@ If you're not sure, have a play with your newly written code and a small helper 
 * [Professor Frisby's Modestly Adequate Guide To Functional Programming](https://legacy.gitbook.com/book/mostly-adequate/mostly-adequate-guide/details)
 * [Crocks Documentation](https://evilsoft.github.io/crocks)
 * [TheEvilSoft YouTube Channel](https://www.youtube.com/channel/UCc8LoGpIa8tRNosGGJroS2Q)
+* [Fluture - comparison to promises](https://github.com/fluture-js/Fluture/wiki/Comparison-to-Promises)
 
 Next - [create a logger for your application](./logging.md)
