@@ -24,7 +24,7 @@ const toUpper = safeLift(isString, s => s.toUpperCase());
 // getLevel :: String -> Number
 const getLevel = compose(option(3), chain(flip(prop)(LEVELS)), toUpper);
 
-let LOG_LEVEL = getLevel(process.env.LOG_LEVEL);
+let LOG_LEVEL = getLevel(process.env.LOG_LEVEL); // don't judge the 'let', it's handy
 const ENVIRONMENT = process.env.NODE_ENV || 'production';
 
 // canLog :: String -> Boolean

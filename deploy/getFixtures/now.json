@@ -1,0 +1,10 @@
+{
+  "name": "world-cup-fixtures",
+  "env": {
+    "TIMEOUT": 1000,
+    "LOG_LEVEL": "NOTICE",
+    "API_BASE": "https://api.football-data.org/v1",
+    "API_TOKEN": "@football-api-token",
+    "COMPETITION_ID": 467
+  }
+}
