@@ -37,6 +37,7 @@ Example JSON response:
 * [The Clean Architecture](https://8thlight.com/blog/uncle-bob/2012/08/13/the-clean-architecture.html)
 * [Hexagonal Architecture](http://fideloper.com/hexagonal-architecture)
 * [Micro](https://npmjs.com/package/micro)
+* [Handling setup in micro applications](https://zeit.co/blog/micro-9-1)
 * [test-listen](https://npmjs.com/package/test-listen)
 * [Now](https://zeit.co/now)
 
