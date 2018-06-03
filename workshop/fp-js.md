@@ -81,6 +81,13 @@ If you're not sure, have a play with your newly written code and a small helper 
 
 > The API expects queries in the format `status-code-checker.now.sh/:code` where `:code` is a numerical value representing a valid status code (i.e. 404, 500, etc.)
 
+## Exercises
+
+1. Having played around with the functions you've just written, create a new version of `mfetch` which rejects when the response has a status code which implies an unsuccessful request.
+2. Create a new function `mfetchJson` which, when called with appropriate parameters creates an Async containing a JSON response (i.e. the body of the response parsed into JavaScript objects)
+
+> Hint, have a look around the crocks documentation to see how you can use predicates and logic functions to build up the various pieces of functionality
+
 ## Further Reading
 
 * [Professor Frisby's Modestly Adequate Guide To Functional Programming](https://legacy.gitbook.com/book/mostly-adequate/mostly-adequate-guide/details)
