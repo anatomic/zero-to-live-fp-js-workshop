@@ -26,7 +26,7 @@ This does a pretty good job of showing how a traditional MVC application may con
 
 ## Exercises
 
-1.  Build a basic micro service which returns "Hello World" as the response for any request
+1.  Build a basic micro service which returns "Hello World" as the response for any request to localhost:8000
 1.  Change the response from a string to a JavaScript object
 1.  Add a rule which responds with a 404 when the browser requests `/favicon.ico`
 1.  Add unit test(s) to validate the service is working as expected

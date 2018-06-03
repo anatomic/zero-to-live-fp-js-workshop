@@ -6,7 +6,7 @@ To take things forward, we're going to be building a new microservice which uses
 
 ## Exercises
 
-1. Create a microservice which will use the API provided by [https://www.football-data.org](https://www.football-data.org) to return all the fixtures in the upcoming World Cup
+1. Create a microservice which will use the API provided by [https://www.football-data.org](https://www.football-data.org) to return all the fixtures in the upcoming World Cup (again, make it run on localhost:8000)
 1. Add logging to emit events detailing requests received and responses sent
 1. Add logic to remove the links to original API endpoints (`_links` property in each fixture) and replace them with IDs for the entities
 1. Explore using lenses for getting and setting properties on your fixture objects
