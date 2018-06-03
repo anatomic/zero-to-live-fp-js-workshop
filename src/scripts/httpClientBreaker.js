@@ -5,7 +5,6 @@ const fetch = require('node-fetch');
 const assoc = require('crocks/helpers/assoc');
 const compose = require('crocks/helpers/compose');
 const composeK = require('crocks/helpers/composeK');
-const curry = require('crocks/helpers/curry');
 const defaultTo = require('crocks/helpers/defaultTo');
 const propOr = require('crocks/helpers/propOr');
 const and = require('crocks/logic/and');
@@ -13,8 +12,6 @@ const ifElse = require('crocks/logic/ifElse');
 const isNumber = require('crocks/predicates/isNumber');
 
 const { Rejected } = Async;
-
-const log = curry((tag, val) => (console.log(tag, val), val));
 
 const mfetch = Async.fromPromise(fetch); //can't do this anymore...
 const toJson = res => res.json();
