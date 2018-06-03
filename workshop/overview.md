@@ -19,6 +19,7 @@ The source for the workshop is available on github:
 
 1. [Writing JavaScript in a functional style using ADTs from the crocks library](./fp-js.md)
 1. [Logging](./logging.md)
+1. [A Basic Microservice](./design-patterns.md)
 1. [Configuration](./configuration.md)
 1. [Metrics](./metrics.md)
 1. [Circuit Breakers](./circuit-breaker.md)
