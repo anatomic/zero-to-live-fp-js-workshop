@@ -22,7 +22,7 @@ const requestGauge = new client.Gauge({
   name: 'fixturesAPIActiveRequests',
   help: 'Shows the current number of requests being processed',
 });
-const responseTimer = new client.Summary({
+const responseTimer = new client.Histogram({
   name: 'fixturesAPIResponseDuration',
   help: 'Breaks down the length of time required to handle a request',
 });
