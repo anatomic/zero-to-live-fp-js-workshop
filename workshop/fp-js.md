@@ -102,3 +102,5 @@ If you're not sure, have a play with your newly written code and a small helper 
 ## Further Reading
 
 * [Professor Frisby's Modestly Adequate Guide To Functional Programming](https://legacy.gitbook.com/book/mostly-adequate/mostly-adequate-guide/details)
+* [Crocks Documentation](https://evilsoft.github.io/crocks)
+* [TheEvilSoft YouTube Channel](https://www.youtube.com/channel/UCc8LoGpIa8tRNosGGJroS2Q)
