@@ -6,6 +6,7 @@ One example of this separation of concerns is the hexagonal architecture (shown 
 
 ![Hexagonal Architecture](./diagrams/hexagonal-architecture.png)
 
+This does a pretty good job of showing how a traditional MVC application may consider splitting itself up to fit this "clean architecture" style thinking. It doesn't, however, map neatly with some of the other ideas presented as part of this workshop so I've tweaked it slightly to better fit how I view this concept related to functional programming principles.
 
 ![Target Architecture](./diagrams/target-architecture.png)
 
@@ -32,3 +33,5 @@ Example JSON response:
 * [Micro](https://npmjs.com/package/micro)
 * [test-listen](https://npmjs.com/package/test-listen)
 * [Now](https://zeit.co/now)
+
+![The clean architecture as drawn by Uncle Bob](./diagrams/clean-architecture.jpg)
