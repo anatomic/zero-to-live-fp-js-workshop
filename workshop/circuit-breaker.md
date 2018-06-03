@@ -10,7 +10,22 @@ tl;dr Use toxiproxy and inject failure to watch things crumble (or not, after al
 
 1. Using the `httpClient` you wrote in the [first part of the workshop](./fp-js.md), create a new version of the client which includes a circuit breaker
 1. Update your world cup fixtures application to use your newly created circuit breaker version of httpClient
+1. Test your circuit breaker using toxiproxy and siege - how does your application's response change over time?
 
+## Help
+
+Some useful toxiproxy commands:
+
+```bash
+# start the server
+toxiproxy-server
+
+# in a new terminal
+toxiproxy-cli create "footy-api" --listen localhost:8080 --upstream api.football-data.org:80
+
+# add some failure!
+toxiproxy-cli toxic add footy-api --type timeout -n down -a timeout=2000
+```
 
 ## Further Reading
 
@@ -19,3 +34,5 @@ tl;dr Use toxiproxy and inject failure to watch things crumble (or not, after al
 * [Circuit Breaker](https://martinfowler.com/bliki/CircuitBreaker.html)
 * [Brakes](https://npmjs.com/package/brakes)
 * [Toxiproxy](https://github.com/Shopify/toxiproxy)
+
+Next - [docker](./docker.md)

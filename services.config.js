@@ -39,7 +39,7 @@ module.exports = {
       env: {
         PORT: 8001,
         API_TOKEN: 'c1f33647715444d5897b249e5245c56d',
-        API_BASE: 'http://api.football-data.org/v1',
+        API_BASE: 'https://api.football-data.org/v1',
         COMPETITION_ID: 467,
         LOG_LEVEL: 'debug',
         NODE_ENV: 'development',

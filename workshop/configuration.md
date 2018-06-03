@@ -38,3 +38,5 @@ It may not be immediately obvious when using this in simple examples such as tho
 * [Zookeeper](https://zookeeper.apache.org/)
 * [Kubernetes Secrets](https://kubernetes.io/docs/concepts/configuration/secret/)
 * [Now Environment Variables and Secrets](https://zeit.co/blog/environment-variables-secrets)
+
+Next - [metrics](./metrics.md)

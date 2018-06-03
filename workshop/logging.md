@@ -26,3 +26,5 @@ Logging is an area where we start to seek out the more pragmatic side of functio
 * [fluentd](https://www.fluentd.org/)
 * [ELK Stack](https://www.elastic.co/elk-stack)
 * [Why JSON is the best application log format](https://www.loggly.com/blog/why-json-is-the-best-application-log-format-and-how-to-switch/)
+
+Next - [Create a simple HTTP API](./a-simple-application.md)

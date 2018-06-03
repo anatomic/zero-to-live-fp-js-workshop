@@ -58,3 +58,5 @@ For now, we'll ignore the docker-compose aspects of this project and will hopefu
 * [Kubernetes](https://kubernetes.io/)
 * [PM2](http://pm2.keymetrics.io/)
 * [Now](https://zeit.co/now)
+
+Next - [configuration](./configuration.md)

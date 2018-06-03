@@ -50,3 +50,5 @@ Example JSON response:
 * [Now](https://zeit.co/now)
 
 ![The clean architecture as drawn by Uncle Bob](./diagrams/clean-architecture.jpg)
+
+Next - [a more realistic application](./a-more-realistic-application.md)

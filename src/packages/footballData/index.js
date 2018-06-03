@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const Brakes = require('brakes');
 const Async = require('crocks/Async');
 const ReaderT = require('crocks/Reader/ReaderT');
 
@@ -32,7 +33,17 @@ const fromJson = r =>
   );
 
 const parseResponse = ifElse(isSuccess, fromJson, Rejected);
-const mfetch = Async.fromPromise(fetch);
+const fetchBreaker = new Brakes(fetch, {
+  timeout: process.env.TIMEOUT,
+  name: 'football-api-fetch',
+});
+const mfetch = (url, options) =>
+  Async((rej, res) =>
+    fetchBreaker
+      .exec(url, options)
+      .then(res)
+      .catch(rej)
+  );
 const fetchJson = composeK(parseResponse, mfetch);
 
 const defaults = defaultProps({
