@@ -20,7 +20,9 @@ The simplest way to understand Reader is that it provides a way to provide read-
 
 > `ReaderT` is a Monad Transformer that wraps a given Monad with a `Reader`. This allows the interface of a Reader that enables the composition of computations that depend on a shared environment `(e -> a)`, but provides a way to abstract a means the `Reader` portion, when combining `ReaderT`s of the same type. All `ReaderT`s must provide the constructor of the target Monad that is being wrapped.
 
-Ok, so in my opinion this is even harder to get into than before.
+Ok, so in my opinion this is even harder to get into than before but is ultimately the most useful way of interacting with a Reader. What ReaderT is doing is embellishing the behaviour of the underlying Monad with the environment access features of a Reader.
+
+It may not be immediately obvious when using this in simple examples such as those in this workshop, however, as your applications grow and the flows begin to have multiple steps (for example, multiple http requests) then having the ability to access the environment in any discrete step is very helpful indeed. This also allows us to split up the steps into discrete chunks to allow easier testing...
 
 ## Exercises
 
