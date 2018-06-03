@@ -52,7 +52,7 @@ From the Fluture wiki:
 > * Any side-effects will run, even if continuations are never provided. This means Promises cannot be used to control side-effects.
 > * Errors might occur as a result of the evaluation, but Promises have no way to know whether they will be handled.
 
-*(Other variants of the Async Monad are available, see [Task](http://folktale.origamitower.com/api/v2.1.0/en/folktale.concurrency.task.html) and [Fluture](https://github.com/fluture-js/Fluture/wiki/Comparison-to-Promises), for example)**
+*(Other variants of the Async Monad are available, see [Task](http://folktale.origamitower.com/api/v2.1.0/en/folktale.concurrency.task.html) and [Fluture](https://github.com/fluture-js/Fluture/wiki/Comparison-to-Promises), for example)*
 
 ## Next Steps
 

@@ -1,8 +1,6 @@
 # A More Advanced Application
 
-Hello World is great, but it's not giving us the opportunity to really put into practise some of our functional programming ideas.
-
-To take things forward, we're going to be building a new microservice which uses our `httpClient` and `logger` from previous modules 
+Hello World is great, but it's not giving us the opportunity to really put into practise some of our functional programming ideas. To take things forward, we're going to be building a new microservice which uses our `httpClient` and `logger` from previous modules.
 
 ## Exercises
 
