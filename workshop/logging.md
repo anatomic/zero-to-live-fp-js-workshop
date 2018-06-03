@@ -19,8 +19,21 @@ We'll be using the logging levels as defined by The Syslog Protocol RFC:
 | 6 | Informational: informational messages |
 | 7 | Debug: debug-level messages |
 
-
 ## Log Format
+
+There's various schools of thought about how to structure your log output, ultimately it comes down to what's going to be most useful for your use-case. We'll favour outputting everything 
+
+Example of common log format:
+```bash
+127.0.0.1 user-identifier frank [10/Oct/2000:13:55:36 -0700] "GET /apache_pb.gif HTTP/1.0" 200 2326
+```
+
+Example of JSON log format:
+```JavaScript
+{"tag":"codes","environment":"development","pid":83407,"ppid":82653,"platform":"darwin","timestamp":1528069192556,"dateTime":"2018-06-03T23:39:52.556Z","level":"NOTICE","body":{"message":"Invalid status code supplied","path":"/status-codes/509","status":509}}
+```
+
+Whichever format you choose to go with, keep in mind that logging is most effective when your log is output on a single line.
 
 ## Exercises
 
@@ -40,5 +53,7 @@ We'll be using the logging levels as defined by The Syslog Protocol RFC:
 * [fluentd](https://www.fluentd.org/)
 * [ELK Stack](https://www.elastic.co/elk-stack)
 * [Why JSON is the best application log format](https://www.loggly.com/blog/why-json-is-the-best-application-log-format-and-how-to-switch/)
+* [Write Logs for Machines, Use JSON](https://paul.querna.org/articles/2011/12/26/log-for-machines-in-json/)
+* [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format)
 
 Next - [Create a simple HTTP API](./a-simple-application.md)
