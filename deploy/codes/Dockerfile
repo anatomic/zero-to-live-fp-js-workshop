@@ -1,4 +1,4 @@
-FROM anatomic/status-codes:latest
+FROM anatomic/status-codes:prod
 
 ENV PORT 8000
 ENV NODE_ENV production

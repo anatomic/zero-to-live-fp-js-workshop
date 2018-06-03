@@ -41,6 +41,46 @@ mfetch('http://some.url.com')
     );
 ```
 
+## Next Steps
+
+The above is great, we've got our basic client and it's firing off requests splendidly but it's not the most useful thing ever written. Typically, the response will be checked to make sure it's an expected response type (i.e. check the HTTP status code) and then the body of the response will be parsed into something more useful. For the vast majority of uses we're talking about, this processing starts with getting the body as JSON.
+
+```JavaScript
+const toJson = res => res.json(); // this is a promise based API
+const promiseToAsync = p => Async((rej, res) => p.then(res).catch(rej));
+const jsonAsync = res => promiseToAsync(toJson(res));
+```
+
+## Becoming Pointless
+
+The above example works but it's a little uglier than it needs to be and declares more variables (via parameters) than is strictly necessary.
+
+A good habit to get into is looking at places where functions are combined together in some way and seeing if they can be smushed together using a helper function called `compose`. 
+
+```JavaScript
+// compose adheres to some basic laws
+// given a function f and a function g...
+() => f(g()) === compose(f, g); 
+```
+
+With our new tool under our belt, let's re-write the previous example (don't forget to add `const compose = require('crocks/helpers/compose');` to the top of your file)
+
+```JavaScript
+const toJson = res => res.json();
+const promiseToAsync = p => Async((rej, res) => p.then(res).catch(rej));
+const jsonAsync = compose(promiseToAsync, toJson);
+```
+
+Congratulations, you've just written your first pointfree flow.
+
+## Validating responses
+
+We're nearly there with our basic http client, but one thing's not quite right. What happens when we request something from an API and the response has a status code > 400?
+
+If you're not sure, have a play with your newly written code and a small helper API that's running as part of this workshop - [https://status-code-checker.now.sh](https://status-code-checker.now.sh)
+
+> The API expects queries in the format `status-code-checker.now.sh/:code` where `:code` is a numerical value representing a valid status code (i.e. 404, 500, etc.)
+
 ## Further Reading
 
 * [Professor Frisby's Modestly Adequate Guide To Functional Programming](https://legacy.gitbook.com/book/mostly-adequate/mostly-adequate-guide/details)
