@@ -27,7 +27,7 @@ It may not be immediately obvious when using this in simple examples such as tho
 ## Exercises
 
 1. Take the hard coded secrets and configuration out of your world cup microservice and retrieve them from the environment. *Consider which elements of your application may need to differ between environments (this includes testing environments which run unit and integration tests)*
-1. Introduce ReaderT into your
+1. Introduce ReaderT into your application to provide configuration to your Async wrapped side-effects
 
 ## Further Reading
 
