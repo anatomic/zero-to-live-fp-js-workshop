@@ -41,17 +41,19 @@ const defaults = defaultProps({
 });
 
 const fixtures = competitionId =>
-  ask(defaults).chain(env =>
-    lift(
-      fetchJson(`${env.apiBase}/competitions/${competitionId}/fixtures`, {
-        headers: {
-          'x-request-id': env.requestId,
-          'X-Auth-Token': env.apiToken,
-        },
-        timeout: env.timeout,
-      }).map(fromAPIResponse)
+  ask(defaults)
+    .chain(env =>
+      lift(
+        fetchJson(`${env.apiBase}/competitions/${competitionId}/fixtures`, {
+          headers: {
+            'x-request-id': env.requestId,
+            'X-Auth-Token': env.apiToken,
+          },
+          timeout: env.timeout,
+        })
+      )
     )
-  );
+    .map(fromAPIResponse);
 
 module.exports = {
   fixtures,
