@@ -2,7 +2,7 @@
 
 So now for the side-effects! Implementing metrics is our first real break from trying to build our pure ivory tower of FP. By their very nature, metrics require us to maintain some concept of state and introduce side-effects to our applications.
 
-Fear not, however, because the application structure we have come to know and love allows us to decorate our lovely, declarative, pure computations with the imperative, side-effecty business of reporting just what's going on under the surface. 
+Fear not, however, the application structure we have come to know and love allows us to decorate our lovely, declarative, pure computations with the imperative, side-effecty business of reporting just what's going on under the surface. 
 
 ## Why Do You Need Metrics When You Have Logs?
 
@@ -11,6 +11,8 @@ From Cindy Sridharan's article [Logs and Metrics](https://medium.com/@copyconstr
 > Since metrics are just numbers measured over intervals of time, they can be compressed, stored, processed and retrieved far more efficiently than logs representing plaintext records or JSON blobs. Metrics are optimized for storage and enable longer retention of data, which can in turn be used to build dashboards to reflect historical trends. Additionally, metrics better allow for gradual reduction of data resolution over time, so that after a certain period of time data can be aggregated into daily or weekly frequency.
 
 Metrics give you a great way to introduce observability into your app without necessarily incurring the overhead of shipping, storing and processing logs. For example, if your traffic scales dramatically, typically your metrics data rate stays constant (just the numbers it's reporting are different). However, if your traffic scales dramatically, chances are your log volume will scale proportionally with the traffic. This can get difficult to manage (disk's filling up and causing issues) and potentially very expensive (depending on the hardward and licensing costs of your log aggregation and processing etc.).
+
+![Example of metrics](./diagrams/requests-per-second.png)
 
 ## Core Metrics
 
@@ -36,8 +38,8 @@ const requestGauge = new client.Gauge({
   help: 'Shows the current number of requests being processed',
 });
 
-requestGuage.inc(); // increases the count
-reuestGuage.dec(); // decreases the count!
+requestGauge.inc(); // increases the count
+reuestGauge.dec(); // decreases the count!
 ```
 
 ### Histogram
