@@ -10,7 +10,7 @@ This is possibly the biggest minefield as *every* company and/or project will li
 * auto-restart of applications on code changes
 * process independence to allow for deployment via docker
 * ability to build ecosystem of applications and backing services using `docker-compose` (advanced!)
-* ability to have a proxy which maps paths to applications (if this isn't clear, see the blog from Zeit [Simplifying Microservices with Path Aliases](https://zeit.co/docs/features/path-aliases))
+* ability to have a proxy which maps paths to applications (if this isn't clear, see the blog from Zeit - [Simplifying Microservices with Path Aliases](https://zeit.co/docs/features/path-aliases))
 
 To achieve this, we're going to use a couple of different tools (some clues from the list above):
 
