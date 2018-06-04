@@ -41,6 +41,11 @@ Whichever format you choose to go with, keep in mind that logging is most effect
 
 As well as being an awesome library for working with ADTs, crocks is also a pragmatic language for working with ADTs. While some camps won't be happy with some of the choices we'll make around exposing side-effects (such as logging), there's no point in getting overly het up about making JavaScript behave *exactly* like Haskell. For a start, it can't, so let's embrace some pragmatism and make use of the incredibly helpful `tap` function provided by Crocks.
 
+```haskell
+tap :: (a -> b) -> a -> a
+```
+
+Example of using `tap` in the node REPL:
 ```bash
 > const tap = require('crocks/helpers/tap');
 undefined
