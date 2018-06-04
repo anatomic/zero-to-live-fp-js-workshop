@@ -1,4 +1,4 @@
-# A More Advanced Application
+# A More Realistic Application
 
 Hello World is great, but it's not giving us the opportunity to really put into practise some of our functional programming ideas. To take things forward, we're going to be building a new microservice which uses our `httpClient` and `logger` from previous modules.
 
@@ -15,7 +15,7 @@ Hello World is great, but it's not giving us the opportunity to really put into 
 * [https://world-cup-fixtures.now.sh](https://world-cup-fixtures.now.sh) is a live example of the sort of output you should be receiving from your microservice
 * You will likely want to sign up for an API token to make sure that your don't fall fowl of the default rate-limiting on the api.football-data.org endpoints
 
-### Example Source Fixture Response
+### Example Fixture Object From Source API
 ```JSON
 {
    "result" : {
@@ -42,6 +42,23 @@ Hello World is great, but it's not giving us the opportunity to really put into 
       }
    },
    "awayTeamName" : "Saudi Arabia"
+}
+```
+
+### Example Fixture Object From Our API
+```JSON
+{
+   "fixtureId" : "165069",
+   "awayTeamId" : "801",
+   "homeTeamName" : "Russia",
+   "awayTeamName" : "Saudi Arabia",
+   "status" : "TIMED",
+   "date" : "2018-06-14T15:00:00.000Z",
+   "result" : {
+      "goalsHomeTeam" : null,
+      "goalsAwayTeam" : null
+   },
+   "homeTeamId" : "808"
 }
 ```
 
