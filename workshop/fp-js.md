@@ -32,7 +32,7 @@ It's a fairly standard Promise based interface, which is great as it makes it ea
 const fetch = require('node-fetch');
 const Async = require('crocks/Async');
 
-const mfetch = Async.frompromise(fetch); // That's it!
+const mfetch = Async.fromPromise(fetch); // That's it!
 
 mfetch('http://some.url.com')
     .fork(
