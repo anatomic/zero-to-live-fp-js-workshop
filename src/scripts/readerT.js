@@ -82,4 +82,4 @@ const add20ToEnv = ask(x => x + 20); // x will be set to the value provided in r
 const flow = add10ToEnv.chain(x => add20ToEnv.map(y => x + y));
 
 console.log(flow.runWith(1)); // Just(1 + 10) + Just(1 + 20) = Just 32
-console.log(flow.runWith(10)); // Just(1 + 10) + Just(1 + 20) = Just 32
+console.log(flow.runWith(10)); // Just(10 + 10) + Just(10 + 20) = Just 50

@@ -16,6 +16,30 @@ I'm sure this description is perfectly accessible for people well versed in cate
 
 The simplest way to understand Reader is that it provides a way to provide read-only data to any function (computation). So, for example, in our application where we have a specific base URL for calls to the football-data API, we may choose to pass this to our functions by wrapping them in a Reader rather than reaching into the `process.env` global (which is impure).
 
+```JavaScript
+const Reader = require('crocks/Reader');
+const concat = require('crocks/pointfree/concat');
+
+const { ask } = Reader;
+
+// greet :: String -> Reader String String
+const greet = greeting => Reader(name => `${greeting}, ${name}`);
+
+// addFarewell :: String -> Reader String String
+const addFarewell = farewell => str => ask(env => `${str}${farewell} ${env}`);
+
+// flow :: Reader String String
+const flow = greet('Hola')
+  .map(concat('...'))
+  .chain(addFarewell('See Ya'));
+
+console.log(flow.runWith('Thomas'));
+// => Hola, Thomas...See Ya Thomas
+
+console.log(flow.runWith('Jenny'));
+// => Hola, Jenny...See Ya Jenny
+```
+
 ## Working wih ReaderT
 
 > `ReaderT` is a Monad Transformer that wraps a given Monad with a `Reader`. This allows the interface of a Reader that enables the composition of computations that depend on a shared environment `(e -> a)`, but provides a way to abstract a means the `Reader` portion, when combining `ReaderT`s of the same type. All `ReaderT`s must provide the constructor of the target Monad that is being wrapped.
@@ -23,6 +47,35 @@ The simplest way to understand Reader is that it provides a way to provide read-
 Ok, so in my opinion this is even harder to get into than before but is ultimately the most useful way of interacting with a Reader. What ReaderT is doing is embellishing the behaviour of the underlying Monad with the environment access features of a Reader.
 
 It may not be immediately obvious when using this in simple examples such as those in this workshop, however, as your applications grow and the flows begin to have multiple steps (for example, multiple http requests) then having the ability to access the environment in any discrete step is very helpful indeed. This also allows us to split up the steps into discrete chunks to allow easier testing...
+
+```JavaScript
+const ReaderT = require('crocks/Reader/ReaderT');
+const Maybe = require('crocks/Maybe');
+const safe = require('crocks/Maybe/safe');
+const isNumber = require('crocks/predicates/isNumber');
+const and = require('crocks/logic/and');
+
+const MaybeReader = ReaderT(Maybe);
+const { ask, liftFn } = MaybeReader;
+const { Just, Nothing } = Maybe;
+
+// add :: Number -> Number -> Number
+const add = x => y => x + y;
+
+// Typical Constructor
+MaybeReader(safe(isNumber)).runWith(76);
+//=> Just 76
+
+MaybeReader(safe(isNumber)).runWith('76');
+//=> Nothing
+
+const add10ToEnv = ask(x => x + 10);
+const add20ToEnv = ask(x => x + 20); // x will be set to the value provided in runWith
+const flow = add10ToEnv.chain(x => add20ToEnv.map(y => x + y));
+
+console.log(flow.runWith(1)); // Just(1 + 10) + Just(1 + 20) = Just 32
+console.log(flow.runWith(10)); // Just(10 + 10) + Just(10 + 20) = Just 50
+```
 
 ## Exercises
 

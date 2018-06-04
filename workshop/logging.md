@@ -77,5 +77,6 @@ undefined
 * [Why JSON is the best application log format](https://www.loggly.com/blog/why-json-is-the-best-application-log-format-and-how-to-switch/)
 * [Write Logs for Machines, Use JSON](https://paul.querna.org/articles/2011/12/26/log-for-machines-in-json/)
 * [Common Log Format](https://en.wikipedia.org/wiki/Common_Log_Format)
+* [The Syslog Protocol](https://tools.ietf.org/html/rfc5424)
 
 Next - [Create a simple HTTP API](./a-simple-application.md)
