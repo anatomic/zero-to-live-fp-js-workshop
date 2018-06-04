@@ -62,4 +62,9 @@ Hello World is great, but it's not giving us the opportunity to really put into 
 }
 ```
 
+## Further Reading
+
+* [Football Data](http://www.football-data.org/)
+* [Football Data API Docs](http://www.football-data.org/docs/v1/index.html)
+
 Next - [process management](./process-management.md)
