@@ -26,3 +26,9 @@ The source for the workshop is available on github:
 1. [Circuit Breakers](./workshop/circuit-breaker.md)
 1. [Containerisation with Docker](./workshop/docker.md)
 1. [Deployment](./workshop/deployment.md)
+
+## Spoiler Alert
+
+The eagle eyed among you will have spotted that there's quite a bit of code knocking about in this repo and you're correct in thinking these are (potential) ways of solving the problems in the various exercises.
+
+Be honest with yourself, will you get the most out of this workshop if you cheat by looking? To quote Blind Date, the choice... is yours!
