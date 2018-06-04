@@ -35,19 +35,19 @@ pm2 logs # tail the stream of logs produced by all apps (this can be filtered to
 pm2 monit # open a dashboard showing the current state of all apps being managed by pm2
 ```
 
-![pm2 status output](./diagrams/pm2-status.png)
+![PM2 status output](./diagrams/pm2-status.png)
 
 ## Docker Compose
  
 > Twelve-factor processes are stateless and share-nothing. Any data that needs to persist must be stored in a stateful backing service, typically a database.
 
-`docker-compose` gives us an elegant way to set up our full environment for development, including backing services. Again, there are many ways for us to work with docker and docker-compose and the workshop uses these tools to build on top of the features offered by pm2, rather than replace it.
+`docker-compose` gives us an elegant way to set up our full environment for development, including backing services. Again, there are many ways for us to work with docker and docker-compose and the workshop uses these tools to build on top of the features offered by PM2, rather than replace it.
 
 For now, we'll ignore the docker-compose aspects of this project and will hopefully come back to them after we've explored metrics and circuit-breakers.
 
 ## Exercises
 
-1. Create a `services.config.js` file at the root of your project define an app to run your "hello world" service ([pm2's process file documentation will help](http://pm2.keymetrics.io/docs/usage/application-declaration/))
+1. Create a `services.config.js` file at the root of your project define an app to run your "hello world" service ([PM2's process file documentation will help](http://pm2.keymetrics.io/docs/usage/application-declaration/))
 2. Play with scaling the application to multiple instances
 3. Add the world cup fixtures app to your `services.config.js` file and try to start it up. What happens?
 
