@@ -51,6 +51,21 @@ For now, we'll ignore the docker-compose aspects of this project and will hopefu
 2. Play with scaling the application to multiple instances
 3. Add the world cup fixtures app to your `services.config.js` file and try to start it up. What happens?
 
+### Example App Config for PM2
+
+```JavaScript
+{
+  name: 'Hello World',
+  script: './src/services/helloWorld/index.js',
+  exec_mode: 'cluster',
+  watch: true,
+  env: {
+    PORT: 8000,
+    NODE_ENV: 'development',
+  }
+}
+```
+
 ## Further Reading
 
 * [Docker](https://www.docker.com/)
