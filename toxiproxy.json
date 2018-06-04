@@ -1,0 +1,7 @@
+[
+  {
+    "name": "football-api-proxy",
+    "listen": "toxiproxy:9000",
+    "upstream": "api.football-data.org:80"
+  }
+]

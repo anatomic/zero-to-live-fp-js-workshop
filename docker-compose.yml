@@ -11,12 +11,20 @@ services:
     ports:
       - "8080:8080"
       - "9002:9002"
+  toxiproxy:
+    image: 'shopify/toxiproxy'
+    command: ["-host=0.0.0.0", "-config=/etc/toxiproxy/config.json"]
+    volumes:
+      - "./toxiproxy.json:/etc/toxiproxy/config.json"
+    ports:
+      - "8474:8474"
   api:
     ports:
       - "8000-8005:8000-8005"
+      - "3000:3000"
     build:
       context: .
-    command: ["yarn", "run", "dev"]
+    command: ["yarn", "run", "docker"]
     volumes:
       - "./src/packages:/code/src/packages"
       - "./src/services:/code/src/services"

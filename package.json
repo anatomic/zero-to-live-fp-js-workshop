@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "A project to teach developers how to stand up high quality node.js services",
   "scripts": {
-    "start": "pm2-runtime services.config.js --env production",
-    "dev": "pm2-dev services.config.js --env development",
+    "start": "pm2-dev services.config.js --env development",
+    "docker": "pm2-dev docker.config.js --env development",
     "test": "jest"
   },
   "keywords": [],
