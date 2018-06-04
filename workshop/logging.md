@@ -60,7 +60,7 @@ undefined
 ## Exercises
 
 1. Write a **really** basic logger which takes a message, decorates it with some useful stuff (like timestamp, environment, etc.) and then writes out to `stdout`.
-1. Introduce the concept of log levels to your logger ([see here for more information]())
+1. Introduce the concept of log levels to your logger so you can indicate severity
 1. Add the ability to only log certain levels and higher (i.e. Notice, Warn, Error, Fatal) by setting a flag as an environment variable (e.g. `LOG_LEVEL=debug`)
 
 ### Extension Task
